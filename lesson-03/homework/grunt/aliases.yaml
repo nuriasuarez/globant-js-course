@@ -1,0 +1,6 @@
+default:
+  - jshint
+  - watch
+
+test:
+  - mocha
