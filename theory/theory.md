@@ -1,6 +1,6 @@
 # Lesson 1: Introduction to JavaScript
 
-## Topics
+## Table of Contents
 
   1. [Types](#types)
   1. [Objects](#objects)
@@ -11,7 +11,7 @@
   1. [Variables](#variables)
   1. [Conditional Expressions & Equality](#conditional-expressions--equality)
   1. [Events](#events)
-  1. [Debug] (#debug)
+  1. [Debug](#debug)
 
 #### Types
 
@@ -555,5 +555,37 @@
 **[⬆ back to top](#topics)**
 
 #### Debug
+
+##### Chrome
+* Open the browser
+* From the menu, select tools
+* From tools, choose developer tools
+* Finally, select Console
+
+##### Firefox Firebug
+* Open the browser
+* Go to the web page: http://www.getfirebug.com
+* Follow the instructions how to install Firebug
+
+##### Internet Explorer
+* Open the browser
+* From the menu, select tools
+* From tools, choose developer tools
+* Finally, select Console
+
+##### Opera
+* Open the browser.
+* Go to the webpage: http://www.opera.com/dragonfly/documentation/debugger
+* Learn how Opera Draginfly works
+
+##### Safari Firebug
+* Open the browser
+* Go to the webpage: http://extensions.apple.com
+* Follow the instructions how to install Firebug Lite
+
+##### Safari Develop Menu
+* Go to Safari, Preferences, Advanced in the main menu
+* Check "Enable Show Develop menu in menu bar"
+* When the new option "Develop" appears in the menu, choose "Show Error Console"
 
 **[⬆ back to top](#topics)**
