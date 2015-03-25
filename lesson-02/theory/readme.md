@@ -1,7 +1,7 @@
 
 # Lesson 2: OOP, Design patterns & Intro to jQuery
 
-## Introduccion a OOP en JS
+## Introduction to OOP on JS
 
 ## Objetos nativos
 JavaScript tiene varios objetos incluidos en su núcleo, como Math, Object, Array y String.
@@ -156,11 +156,12 @@ bomberoLoco.getAge();
 bomberoLoco.getFullName();
 ```
 
-**Referencias**<br>
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript<br>
-http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/<br>
-http://nefariousdesigns.co.uk/object-oriented-javascript.html<br>
+**Referencias**
+[Introduction to Object-Oriented JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript)
+[OOP In JavaScript: What You NEED to Know](http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/)
+[Object-Oriented Javascript](http://nefariousdesigns.co.uk/object-oriented-javascript.html)
 
+----------
 ## Desing patterns
 
  - Design patterns are reusable solutions to commonly occurring problems in software design.
@@ -218,7 +219,7 @@ The three common ways to create new objects in JavaScript are as follows:
 ```javascript
     // preferred, object literal
     var person = {
-      name: "Pepe"
+	    name: "Pepe"
     };
     
     var person = Object.create(Object.prototype);
@@ -233,12 +234,12 @@ As we saw earlier, JavaScript doesn't support the concept of classes but it does
 
 ```javascript
 function Person(name, lastName) {
-  this.name = name;
-  this.lastName = lastName;
-  
-  this.getFullName = function () {
-    return this.name + " " + this.lastName;
-  };
+	this.name = name;
+	this.lastName = lastName;
+	
+	this.getFullName = function () {
+		return this.name + " " + this.lastName;
+	};
 }
 
 // usage
@@ -251,12 +252,12 @@ Functions, like almost all objects in JavaScript, contain a "prototype" object.
 
 ```javascript
 function Person(name, lastName) {
-  this.name = name;
-  this.lastName = lastName;
+	this.name = name;
+	this.lastName = lastName;
 }
 
 Person.prototype.getFullName = function () {
-  return this.name + " " + this.lastName;
+	return this.name + " " + this.lastName;
 };
 
 // usage
@@ -272,12 +273,12 @@ Object literals don't require instantiation using the `new` operator.
 
 ```javascript
 var Person = {
-  name: "Cosme",
-  lastName: "Fulanito",
-  
-  getFullName: function() {
-    return this.name + " " + this.lastName;
-  }
+	name: "Cosme",
+	lastName: "Fulanito",
+	
+	getFullName: function() {
+		return this.name + " " + this.lastName;
+	}
 };
 
 // usage
@@ -292,48 +293,50 @@ In JavaScript, the Module pattern is used to further emulate the concept of clas
 
 ```javascript
 var Person = (function () {
-  var _name = "Cosme",
-    _lastName = "Fulanito";
-    
-  var _getFormalName = function () {
-      return _lastName + ", " + _name;
-    };
-  
-  return {
-    getFullName: function () {
-      return _name + " " + _lastName;
-    },
-    getFormalName: function () {
-      return _getFormalName();
-    }
-  }
+	var _name = "Cosme",
+		_lastName = "Fulanito";
+		
+	var	_getFormalName = function () {
+			return _lastName + ", " + _name;
+		};
+	
+	return {
+		getFullName: function () {
+			return _name + " " + _lastName;
+		},
+		getFormalName: function () {
+			return _getFormalName();
+		}
+	}
 })();
 
 // usage
 console.log(Person.getFullName());
 console.log(Person.getFormalName());
 ```
+**Variations**
 *Import mixins*
 
+Demonstrates how globals can be passed in as arguments to our module's anonymous function. This effectively allows us to import them and locally alias them as we wish.
 ```javascript
 var name = "Cosme";
 var lastName = "Fulanito";
 var Person = (function (n, ln) {
-  var _name = n,
-    _lastName = ln;
-    
-  var _getFormalName = function () {
-      return _lastName + ", " + _name;
-    };
-  
-  return {
-    getFullName: function () {
-      return _name + " " + _lastName;
-    },
-    getFormalName: function () {
-      return _getFormalName();
-    }
-  }
+	var _name = n,
+		_lastName = ln;
+		
+	var	_getFormalName = function () {
+			return _lastName + ", " + _name;
+		};
+	
+	return {
+		getFullName: function () {
+			return _name + " " + _lastName;
+		},
+		getFormalName: function () {
+			return _getFormalName();
+		}
+	}
 })(name, lastName);
 
 // usage
@@ -343,31 +346,213 @@ console.log(Person.getFormalName());
 
 *Export*
 
+Allows us to declare globals without consuming them and could similarly support the concept of global imports.
+
 ```javascript
 var Person = (function () {
-  var objPerson = {};
-  objPerson._name
-  var _name = "Cosme",
-    _lastName = "Fulanito";
-    
-  var _getFormalName = function () {
-      return _lastName + ", " + _name;
-    };
-  
-  return {
-    getFullName: function () {
-      return _name + " " + _lastName;
-    },
-    getFormalName: function () {
-      return _getFormalName();
-    }
-  }
+	var objPerson = {};
+	
+	// Private variables
+	var _name = "Cosme",
+		_lastName = "Fulanito";
+
+	// Private method
+	function _getFormalName() {
+		return _lastName + ', ' + _name;
+	};
+	
+	// Public methods
+	objPerson.getFullName = function() {
+		return _name + ' ' + _lastName;
+	};
+	
+	objPerson.getFormalName = function() {
+		return _getFormalName();
+	};
+	
+	return objPerson;
 })();
 
 // usage
 console.log(Person.getFullName());
 console.log(Person.getFormalName());
 ```
+
+###The Singleton Pattern###
+
+The Singleton pattern is thus known because it restricts instantiation of a class to a single object. 
+
+```javascript
+var Person = (function (){
+	var _instance,
+		_name = "Cosme",
+		_lastName = "Fulanito";
+
+	var objPerson = function() {
+		if(_instance){
+			return _instance;
+		}
+		
+		this.getFullName = function() {
+			return _name + ' ' + _lastName;
+		}
+		
+		this.setName = function(n) {
+			_name = n;
+		}
+		
+		_instance = this;
+	};
+	
+	return objPerson;
+})();
+
+// usage
+var p1 = new Person();
+var p2 = new Person();
+
+p2.setName('Pepito');
+
+console.log(p2.getFullName());
+console.log(p1.getFullName());
+console.log(p1 === p2);
+```
+
+###The Observer Pattern###
+
+Is a publish/subscribe pattern which allows a number of observer objects to see an event,  automatically notifying them of any changes to state.
+
+```javascript
+var pubsub = {};
+
+(function(myObject) {
+ 
+    // Storage for topics that can be broadcast 
+    // or listened to
+    var topics = {};
+ 
+    // An topic identifier
+    var subUid = -1;
+ 
+    // Publish or broadcast events of interest
+    // with a specific topic name and arguments
+    // such as the data to pass along
+    myObject.publish = function(topic, args) {
+        if (!topics[topic]) {
+            return false;
+        }
+ 
+        var subscribers = topics[topic],
+            len = subscribers ? subscribers.length : 0;
+ 
+        while (len--) {
+            subscribers[len].func(topic, args);
+        }
+        return this;
+    };
+ 
+    // Subscribe to events of interest
+    // with a specific topic name and a
+    // callback function, to be executed
+    // when the topic/event is observed
+    
+    myObject.subscribe = function(topic, func) {
+        if (!topics[topic]) {
+            topics[topic] = [];
+        }
+ 
+        var token = (++subUid).toString();
+        topics[topic].push({
+            token: token,
+            func: func
+        });
+        return token;
+    };
+ 
+    // Unsubscribe from a specific
+    // topic, based on a tokenized reference
+    // to the subscription
+    myObject.unsubscribe = function(token) {
+        for (var m in topics) {
+            if (topics[m]) {
+                for (var i = 0, j = topics[m].length; i < j; i++) {
+                    if (topics[m][i].token === token) {
+                        topics[m].splice( i, 1 );
+                        return token;
+                    }
+                }
+            }
+        }
+        return this;
+    };
+}(pubsub));
+
+// usage
+var messageLogger = function (topics, data) {
+    console.log("Logging: " + topics + ": " + data);
+};
+
+var subscription = pubsub.subscribe("inbox/newMessage", messageLogger);
+
+pubsub.publish("inbox/newMessage", "hello world!");
+pubsub.publish("inbox/newMessage", ["test", "a", "b", "c"]);
+
+pubsub.unsubscribe(subscription);
+
+pubsub.publish("inbox/newMessage", "Hello! are you still there?");
+```
+
+###Revelation Pattern###
+It is about having private methods, which you also expose as public methods.
+
+```javascript
+var Person = (function (){
+	var _name = "Cosme",
+		_lastName = "Fulanito";
+
+	function _getFullName() {
+		return _name + ' ' + _lastName;
+	};
+
+	function _getFormalName() {
+		return _lastName + ', ' + _name;
+	};
+
+	return {
+		getFullName: _getFullName,
+		getFormalName: _getFormalName
+	}
+
+})();
+
+// usage
+console.log(Person.getFormalName());
+console.log(Person.getFullName());
+```
+
+###Facade Pattern###
+Provides a simplified interface to a large body of code.
+
+```javascript
+var mobileEvent = {
+	// ...
+	stop:function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
+	// ...
+};
+
+// usage
+var link = document.querySelector('#someAnchorId');
+link.addEventListener('click', function(e){
+	mobileEvent.stop(e);
+});
+```
+
+###The Prototype Pattern###
+
+
 ----------
 
 **References:**
@@ -375,9 +560,17 @@ console.log(Person.getFormalName());
 [JS Patterns](http://shichuan.github.io/javascript-patterns/)
 
 
-**Referencias**<br>
+----------
+#Introduction to jQuery#
 
-## Introduccion a jQuery
+jQuery is just a JavaScript library, or set of helpful add-ons, to the JavaScript programming language. 
 
-**Referencias**<br>
+It takes a while to become comfortable with JavaScript, and it's trickier to manipulate HTML elements directly with JavaScript than with jQuery.
 
+jQuery provides a simple interface for the underlying JavaScript.
+
+
+
+----------
+**References:**
+[jQuery Documentation](http://api.jquery.com/)
