@@ -3,162 +3,158 @@
 
 ## Introduction to OOP on JS
 
-## Objetos nativos
-JavaScript tiene varios objetos incluidos en su núcleo, como Math, Object, Array y String.
+## Standard built-in objects
+JavaScript has several objects included in its core, for example, there are objects like Math, Object, Array, and String.
 
-## Objetos personalizados
-JavaScript utiliza funciones como clases. 
-Definir una clase es tan fácil como definir una función. En el ejemplo siguiente se define una nueva clase llamada Persona.
+## Custom objects
+JavaScript uses functions as classes.
+Defining a class is as easy as defining a function. In the example below we define a new class called Person.
 
 ```javascript
-function Persona() {
+function Person() {
 }
 ```
 
-Para crear un nuevo ejemplo de un objeto Personal utilizamos la declaración new Persona, asignando el resultado (que es de tipo Persona) 
-a una variable para tener acceso más adelante.
+To create a new instance of an object **Person** we use the statement new **Person**, assigning the result (which is of type obj) to a variable to access it later. 
 
 ```javascript
-function Persona() {
+function Person() {
 }
 
-var padre = new Persona();
-var hijo = new Persona();
+var father = new Person();
+var son = new Person();
 ```
 
-## El constructor:
-No hay necesidad de definir explícitamente un método constructor, ya que es llamado en el momento de la creación de la instancia.
-Se usa para establecer las propiedades del objeto o para llamar a los métodos para preparar el objeto para su uso.
+## The constructor:
+Is not need to explicitly define a constructor method, because is called at the moment of instantiation.
+The constructor is used to set the object's properties or to call methods to prepare the object for use. 
 
 ```javascript
-var Persona = function Persona(firstName, lastName) {
-  console.log('Inicializando ' + firstName + ' ' + lastName);
+var Person = function Person(firstName, lastName) {
+  console.log('Initializing ' + firstName + ' ' + lastName);
 }
 
-var padre = new Persona('Homero', 'Simpson');
-var hijo = new Persona('Bart', 'Simpson');
+var father = new Person('Homero', 'Simpson');
+var son = new Person('Bart', 'Simpson');
 ```
 
-## Propiedades:
-Las propiedades son variables contenidas en la clase, y deben establecerse a la propiedad prototipo de la clase (función), 
-para que la herencia funcione correctamente.
+## The properties:
+Properties are variables contained in the class; every instance of the object has those properties. Properties are set in the constructor (function) of the class so that they are created on each instance.
 
-Para trabajar con propiedades dentro de la clase se utiliza la palabra reservada this, que se refiere al objeto y contexto actual.
+Working with properties from within the class is done using the keyword **this**, which refers to the current object.
 
 ```javascript
-var Persona = function Persona(firstName, lastName) {
+var Person = function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-var padre = new Persona('Homero', 'Simpson');
-var hijo = new Persona('Bart', 'Simpson');
+var father = new Person('Homero', 'Simpson');
+var son = new Person('Bart', 'Simpson');
 
-console.log(padre.firstName);
-console.log(hijo.firstName);
+console.log(father.firstName);
+console.log(son.firstName);
 ``` 
 
-## Metodos:
-Los métodos siguen la misma lógica que las propiedades, la diferencia es que son funciones y se definen como funciones. 
-Llamar a un método es similar a acceder 
-a una propiedad, pero se agrega () al final del nombre del método, es posible llamarlos con argumentos.
+## Methods:
+Methods follow the same logic as properties; the difference is that they are functions and they are defined as functions. 
+Calling a method is similar to accessing a property, but you add **()** at the end of the method name, possibly with arguments.
 
-En JavaScript los métodos son objetos como lo es una función normal y se vinculan a un objeto como lo hace una propiedad, 
-lo que significa que se pueden invocar desde "fuera de su contexto". 
+In JavaScript methods are regular function objects that are bound to an object as a property, which means they can be invoked **"out of the context"**. 
 
 ```javascript
-var Persona = function Persona(firstName, lastName) {
+var Person = function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-Persona.prototype.getFullName = function() {
+Person.prototype.getFullName = function() {
   console.log(this.firstName + ' ' + this.lastName);
 }
 
-var padre = new Persona('Homero', 'Simpson');
-var hijo = new Persona('Bart', 'Simpson');
+var father = new Person('Homero', 'Simpson');
+var son = new Person('Bart', 'Simpson');
 
-padre.getFullName();
-hijo.getFullName();
+father.getFullName();
+son.getFullName();
 ```
 
-## Herencia y Encapsulacion:
+## Inheritance & Encapsulation:
 ```javascript
-var Persona = function Persona(firstName, lastName) {
+var Person = function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-Persona.prototype.getFullName = function() {
+Person.prototype.getFullName = function() {
   console.log(this.firstName + ' ' + this.lastName);
 }
 
-var Bombero = function Bombero(firstName, lastName, age) {
-  // llamamos al constructor padre
-  Persona.call(this, firstName, lastName);
+var Fireman = function Fireman(firstName, lastName, age) {
+  // calling to constructor root
+  Person.call(this, firstName, lastName);
   
   this.age = age;
 }
 
-// Heredamos de la clase Persona
-Bombero.prototype = Object.create(Persona.prototype);
+// Inherits from the Person class
+Fireman.prototype = Object.create(Person.prototype);
 
-// Asignamos el constructor a nuestra clase hija
-Bombero.prototype.constructor = Bombero;
+// We assigned our child class constructor
+Fireman.prototype.constructor = Fireman;
 
-// Agregamos un metodo a la clase hija
-Bombero.prototype.getAge = function getAge() {
+// we add a method to the child class
+Fireman.prototype.getAge = function getAge() {
   console.log(this.age);
 }
 
-var bomberoLoco = new Bombero('Flavio', 'Carreño', 32);
-bomberoLoco.getAge();
-bomberoLoco.getFullName();
+var crazyFireman = new Fireman('Flavio', 'Carreño', 32);
+crazyFireman.getAge();
+crazyFireman.getFullName();
 ```
 
-## Poliformismo:
+## Polymorphism:
 ```javascript
-var Persona = function Persona(firstName, lastName) {
+var Person = function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-Persona.prototype.getFullName = function() {
+Person.prototype.getFullName = function() {
   console.log(this.firstName + ' ' + this.lastName);
 }
 
-var Bombero = function Bombero(firstName, lastName, age) {
-  // llamamos al constructor padre
-  Persona.call(this, firstName, lastName);
+var Fireman = function Fireman(firstName, lastName, age) {
+  // calling to the root constructor
+  Person.call(this, firstName, lastName);
   
   this.age = age;
 }
 
-// Heredamos de la clase Persona
-Bombero.prototype = Object.create(Persona.prototype);
+// Inherits from the Person class
+Fireman.prototype = Object.create(Person.prototype);
 
-// Asignamos el constructor a nuestra clase hija
-Bombero.prototype.constructor = Bombero;
+// We assign the constructor to our child class
+Fireman.prototype.constructor = Fireman;
 
-// Agregamos un metodo a la clase hija
-Bombero.prototype.getAge = function getAge() {
+// Add a method to the child class
+Fireman.prototype.getAge = function getAge() {
   console.log(this.age);
 }
 
-// Redefinimos el metodo getFullName
-Bombero.prototype.getFullName = function getFullName() {
+// We redefined the getFullName method
+Fireman.prototype.getFullName = function getFullName() {
   console.log(this.lastName + ', ' + this.firstName);
 }
 
-var bomberoLoco = new Bombero('Flavio', 'Carreño', 32);
-bomberoLoco.getAge();
-bomberoLoco.getFullName();
+var crazyFireman = new Fireman('Flavio', 'Carreño', 32);
+crazyFireman.getAge();
+crazyFireman.getFullName();
 ```
 
 **Referencias**
-[Introduction to Object-Oriented JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript)
-[OOP In JavaScript: What You NEED to Know](http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/)
+[Introduction to Object-Oriented JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript) 
+[OOP In JavaScript: What You NEED to Know](http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/) 
 [Object-Oriented Javascript](http://nefariousdesigns.co.uk/object-oriented-javascript.html)
 
 ----------
@@ -556,7 +552,7 @@ link.addEventListener('click', function(e){
 ----------
 
 **References:**
-[Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+[Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) 
 [JS Patterns](http://shichuan.github.io/javascript-patterns/)
 
 
@@ -574,3 +570,4 @@ jQuery provides a simple interface for the underlying JavaScript.
 ----------
 **References:**
 [jQuery Documentation](http://api.jquery.com/)
+
